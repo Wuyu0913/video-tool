@@ -1,0 +1,104 @@
+<!-- 顶部 -->
+<view class="header">
+  <text class="title">🎬 视频助手</text>
+  <text class="subtitle">一键解析下载无水印视频</text>
+</view>
+
+<!-- 输入区域 -->
+<view class="input-card">
+  <view class="input-label">
+    <text>📎 粘贴视频链接</text>
+    <view class="platform-tags">
+      <text class="tag">抖音</text>
+      <text class="tag">快手</text>
+      <text class="tag">小红书</text>
+      <text class="tag">B站</text>
+    </view>
+  </view>
+  <view class="input-wrapper">
+    <input 
+      class="url-input" 
+      type="text" 
+      placeholder="粘贴分享链接，例如 https://v.douyin.com/xxxxx/"
+      value="{{url}}"
+      bindinput="onUrlInput"
+      bindconfirm="parseVideo"
+      focus="{{autoFocus}}"
+    />
+    <button class="parse-btn" bindtap="parseVideo" disabled="{{parsing}}">
+      <text wx:if="{{parsing}}">解析中...</text>
+      <text wx:else>解析</text>
+    </button>
+  </view>
+</view>
+
+<!-- 每日统计 -->
+<view class="stats-bar">
+  <text>今日已用 {{usedCount}} / {{dailyLimit}} 次</text>
+  <text wx:if="{{remaining > 0}}">剩余 {{remaining}} 次免费</text>
+  <text wx:else class="exhausted">已用完，看广告解锁</text>
+</view>
+
+<!-- 加载中 -->
+<view class="loading {{loading ? 'active' : ''}}">
+  <view class="spinner"></view>
+  <text class="loading-text">正在解析视频...</text>
+</view>
+
+<!-- 错误提示 -->
+<view class="error-msg {{errorMsg ? 'active' : ''}}">
+  <text>{{errorMsg}}</text>
+</view>
+
+<!-- 结果卡片 -->
+<view class="result-card {{result.show ? 'active' : ''}}">
+  <!-- 封面 -->
+  <view class="video-cover" bindtap="previewVideo">
+    <image src="{{result.coverUrl}}" mode="aspectFill" wx:if="{{result.coverUrl}}"></image>
+    <image src="../../images/default-cover.png" mode="aspectFill" wx:else></image>
+    <view class="play-icon" wx:if="{{result.videoUrl}}">
+      <view class="play-icon-inner"></view>
+    </view>
+  </view>
+
+  <!-- 信息 -->
+  <view class="video-info">
+    <text class="video-title">{{result.title}}</text>
+    <view class="video-meta">
+      <text class="author">👤 {{result.author}}</text>
+      <text class="platform-badge platform-{{result.platform}}">{{result.platformName}}</text>
+    </view>
+
+    <!-- 下载按钮 -->
+    <view class="action-buttons">
+      <button class="btn-download" bindtap="downloadVideo" wx:if="{{canDownload}}">
+        📥 保存到相册
+      </button>
+      <button class="btn-ad" bindtap="watchAd" wx:else>
+        📺 看广告免费下载
+      </button>
+    </view>
+  </view>
+</view>
+
+<!-- 视频预览弹窗 -->
+<view class="video-modal {{previewActive ? 'active' : ''}}" bindtap="closePreview">
+  <view class="modal-content" catchtap="preventClose">
+    <video 
+      class="preview-video" 
+      src="{{result.videoUrl}}" 
+      controls
+      autoplay="{{true}}"
+      show-fullscreen-btn="{{false}}"
+      enable-play-gesture="{{true}}"
+      binderror="onVideoError"
+      wx:if="{{result.videoUrl}}"
+    ></video>
+    <view class="modal-close" bindtap="closePreview">✕</view>
+  </view>
+</view>
+
+<!-- 底部 -->
+<view class="footer">
+  <text>视频助手 · 仅供个人学习</text>
+</view>

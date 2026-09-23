@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>视频去水印 - 一键下载无水印视频</title>
+  <meta name="description" content="免费在线视频去水印工具，支持抖音、快手、小红书、B站等平台，一键解析下载无水印视频">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+</head>
+<body>
+  <!-- 头部 -->
+  <div class="header">
+    <h1>🎬 视频去水印</h1>
+    <p>一键解析下载各大平台无水印视频</p>
+  </div>
+
+  <!-- 统计 -->
+  <div class="stats-bar">
+    <span>👥 今日使用 <span class="count" id="todayCount">0</span> 次</span>
+    <span>📥 已下载 <span class="count" id="totalCount">0</span> 个视频</span>
+  </div>
+
+  <div class="container">
+    <!-- 输入区域 -->
+    <div class="input-card">
+      <div class="input-label">
+        📎 粘贴视频链接
+        <div class="platform-tags">
+          <span class="platform-tag">抖音</span>
+          <span class="platform-tag">快手</span>
+          <span class="platform-tag">小红书</span>
+          <span class="platform-tag">B站</span>
+        </div>
+      </div>
+      <div class="input-wrapper">
+        <input type="url" id="urlInput" placeholder="粘贴分享链接，例如 https://v.douyin.com/xxxxx/" autocomplete="off">
+        <button id="parseBtn">解析</button>
+      </div>
+    </div>
+
+    <!-- 加载中 -->
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <div class="loading-text">正在解析视频...</div>
+    </div>
+
+    <!-- 错误提示 -->
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- 免费提示 -->
+    <div class="free-tip" id="freeTip">✨ 每日免费下载 3 次 · 赞助作者享无限次</div>
+
+    <!-- 付费提示 -->
+    <div class="pay-banner" id="payBanner">
+      <h3>⭐ 今日免费次数已用完</h3>
+      <p>赞助作者 9.9 元，解锁无限下载（微信扫码，备注"会员"）</p>
+      <div class="pay-qr" id="payQr">
+        <div style="text-align:center">
+          <div style="font-size:40px;margin-bottom:8px">🤳</div>
+          <div style="font-size:13px;color:#333">请添加作者微信<br>发送"会员"获取收款码</div>
+        </div>
+      </div>
+      <p style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:0">付款后截图发送，立即开通无限下载</p>
+    </div>
+
+    <!-- 结果卡片 -->
+    <div class="result-card" id="resultCard">
+      <!-- 封面 -->
+      <div class="video-cover">
+        <img id="coverImg" src="" alt="视频封面">
+        <div class="play-icon" id="playBtn"></div>
+      </div>
+
+      <!-- 信息 -->
+      <div class="video-info">
+        <div class="video-title" id="videoTitle">视频标题</div>
+        <div class="video-meta">
+          <span class="author">👤 <span id="videoAuthor">作者</span></span>
+          <span class="platform-badge" id="platformBadge">抖音</span>
+        </div>
+        <div class="action-buttons">
+          <a class="btn-download" id="downloadBtn" download>📥 下载无水印视频</a>
+          <button class="btn-download secondary" id="copyBtn">📋 复制</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 视频预览弹窗 -->
+  <div class="video-modal" id="videoModal">
+    <button class="close-btn" id="closeModal">✕</button>
+    <video id="previewVideo" controls playsinline></video>
+  </div>
+
+  <!-- 底部 -->
+  <div class="footer">
+    视频去水印工具 · 仅供个人学习使用 · 请尊重原作者版权
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
